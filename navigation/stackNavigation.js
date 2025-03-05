@@ -10,59 +10,61 @@ import ClientsScreen from "../screens/ClientsScreen";
 import NoterChantierScreen from "../screens/NoterChantierScreen";
 import Login from "../screens/Login";
 import AjouterChantierScreen from "../screens/AjouterChantierScreen";
+import DonneesPersonnellesScreen from "../screens/DonneesPersonnellesScreen"; // Importer la nouvelle page
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigation = () => {
   return (
     <NavigationContainer>
-        <Stack.Navigator>
-
+      <Stack.Navigator>
         <Stack.Screen
           name="Login"
           component={Login}
           options={{ title: "Connexion" }}
         />
-
-        <Stack.Screen 
-            name="Home" 
-            component={HomeScreen} 
-            options={{ title: 'Accueil' }} 
-            />
-        <Stack.Screen 
-            name="Profile" 
-            component={ProfileScreen} 
-            options={{ title: 'Profil' }} 
-            />
-  
-      <Stack.Screen 
-            name="Chantiers" 
-            component={ChantiersScreen} 
-            options={{ title: 'Chantiers' }} 
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: 'Accueil' }}
         />
-
-  <Stack.Screen 
-          name="AjouterChantier" 
-          component={AjouterChantierScreen} 
-          options={{ title: 'Ajouter un Chantier' }} 
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{ title: 'Profil' }}
         />
-
-      <Stack.Screen 
-          name="Employes" 
-          component={EmployeScreen} 
-          options={{ title: 'Employes' }} 
+        <Stack.Screen
+          name="Chantiers"
+          component={ChantiersScreen}
+          options={{ title: 'Chantiers' }}
         />
-                <Stack.Screen 
-          name="Clients" 
-          component={ClientsScreen} 
-          options={{ title: 'Clients' }} 
+        <Stack.Screen
+          name="AjouterChantier"
+          component={AjouterChantierScreen}
+          options={{ title: 'Ajouter un Chantier' }}
         />
-        <Stack.Screen 
-          name="NoterChantier" 
-          component={NoterChantierScreen} 
-          options={{ title: 'Noter le Chantier' }} 
+        <Stack.Screen
+          name="Employes"
+          component={EmployeScreen}
+          options={{ title: 'Employés' }}
         />
-
+        <Stack.Screen
+          name="Clients"
+          component={ClientsScreen}
+          options={{ title: 'Clients' }}
+        />
+        <Stack.Screen
+          name="NoterChantier"
+          component={NoterChantierScreen}
+          options={{ title: 'Noter le Chantier' }}
+        />
+        
+        {/* Nouvelle page pour les données personnelles */}
+        <Stack.Screen
+          name="DonnéesPersonnelles"
+          component={DonneesPersonnellesScreen}
+          options={{ title: 'Données Personnelles' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

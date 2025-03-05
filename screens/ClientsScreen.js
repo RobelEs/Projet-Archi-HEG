@@ -1,4 +1,3 @@
-// screens/ClientsScreen.js
 import React from "react";
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from "react-native";
 
@@ -31,23 +30,35 @@ const ClientsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#ecf0f1", // Fond clair pour un aspect plus moderne
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
+    color: "#2c3e50", // Couleur sombre pour le titre
+    marginBottom: 20,
   },
   item: {
-    padding: 15,
-    marginVertical: 8,
-    backgroundColor: "#f0f0f0",
+    padding: 20,
+    marginVertical: 10,
+    backgroundColor: "#ffffff", // Fond blanc pour chaque item
     borderRadius: 10,
+    shadowColor: "#000", // Ombre pour donner un effet de profondeur
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 6,
+    elevation: 5, // Pour Android
   },
   itemText: {
-    fontSize: 18,
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#34495e", // Couleur sombre pour les titres des chantiers
   },
   itemSubText: {
-    color: "gray",
+    color: "#7f8c8d", // Gris clair pour la description
+    fontSize: 16,
+    marginTop: 5,
   },
 });
 

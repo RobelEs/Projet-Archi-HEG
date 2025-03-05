@@ -1,23 +1,22 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Button } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 const HomeScreen = ({ navigation }) => {
   const [role, setRole] = useState(null);
 
-  // Cette fonction sera appelée dès qu'un rôle est sélectionné
   const handleRoleSelect = (selectedRole) => {
     setRole(selectedRole);
 
     // Redirection automatique selon le rôle sélectionné
     switch (selectedRole) {
       case "Patron":
-        navigation.navigate("Chantiers"); // Le patron voit tous les chantiers
+        navigation.navigate("Chantiers");
         break;
       case "Client":
-        navigation.navigate("Clients"); // Le client voit ses propres chantiers
+        navigation.navigate("Clients");
         break;
       case "Employé":
-        navigation.navigate("Employes"); // L'employé n'a pas encore d'accès spécifique
+        navigation.navigate("DonnéesPersonnelles"); // Redirection vers la page de données personnelles
         break;
       default:
         break;
@@ -26,10 +25,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Titre Bienvenue centré */}
       <Text style={styles.welcomeText}>Bienvenue sur l'application</Text>
-
-      {/* Choix du rôle */}
       <Text style={styles.selectRoleText}>Sélectionnez votre rôle :</Text>
 
       <View style={styles.roleButtonsContainer}>
@@ -53,10 +49,9 @@ const HomeScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      {/* Bouton de déconnexion */}
       <TouchableOpacity
         style={styles.logoutButton}
-        onPress={() => navigation.navigate("Login")} // Redirection vers la page de login
+        onPress={() => navigation.navigate("Login")}
       >
         <Text style={styles.logoutButtonText}>Se déconnecter</Text>
       </TouchableOpacity>
