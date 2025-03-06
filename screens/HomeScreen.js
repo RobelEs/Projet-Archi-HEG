@@ -1,3 +1,4 @@
+// HomeScreen.js
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
@@ -21,6 +22,14 @@ const HomeScreen = ({ navigation }) => {
       default:
         break;
     }
+  };
+
+  const handleLogout = () => {
+    // Réinitialise la navigation pour revenir à la page de connexion
+    navigation.reset({
+      index: 0, // Réinitialise l'index pour être sur la première page (Login)
+      routes: [{ name: "Login" }], // Nom de la page de connexion
+    });
   };
 
   return (
@@ -51,7 +60,7 @@ const HomeScreen = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.logoutButton}
-        onPress={() => navigation.navigate("Login")}
+        onPress={handleLogout} // Appel de la fonction handleLogout
       >
         <Text style={styles.logoutButtonText}>Se déconnecter</Text>
       </TouchableOpacity>

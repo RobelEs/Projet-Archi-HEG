@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+// screens/ChantiersScreen.js
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import GenericList from "../composants/GenericList";  // Assure-toi d'importer correctement ton composant GenericList
+import GenericList from "../../composants/GenericList"; // Assure-toi que GenericList est bien importé
 
 const ChantiersScreen = ({ navigation }) => {
   const chantiers = [
@@ -12,10 +13,14 @@ const ChantiersScreen = ({ navigation }) => {
     { id: "6", nom: "Chantier F", statut: "Terminé" },
   ];
 
-  const [visibleItems, setVisibleItems] = useState(3);  // Nombre d'éléments à afficher initialement
+  const [visibleItems, setVisibleItems] = useState(3); // Nombre d'éléments à afficher initialement
+
+  useEffect(() => {
+    setVisibleItems(3); // Réinitialiser à chaque fois qu'on revient à la page
+  }, []);
 
   const loadMoreItems = () => {
-    setVisibleItems(visibleItems + 3);  // Ajouter 3 éléments à chaque fois qu'on clique sur "Voir plus"
+    setVisibleItems(visibleItems + 3); // Ajouter 3 éléments à chaque fois qu'on clique sur "Voir plus"
   };
 
   // Limite les chantiers affichés à ceux qui sont visibles
@@ -23,10 +28,10 @@ const ChantiersScreen = ({ navigation }) => {
 
   // Fonction pour afficher chaque chantier
   const renderChantier = (item) => (
-    <>
+    <View style={styles.chantierItem}>
       <Text style={styles.chantierName}>{item.nom}</Text>
       <Text style={styles.chantierStatus}>{item.statut}</Text>
-    </>
+    </View>
   );
 
   return (
@@ -40,8 +45,11 @@ const ChantiersScreen = ({ navigation }) => {
         <Text style={styles.addButtonText}>Ajouter un Chantier</Text>
       </TouchableOpacity>
 
-      {/* Utilisation du composant GenericList */}
-      <GenericList data={limitedChantiers} renderItemContent={renderChantier} />
+      {/* Utilisation de GenericList pour afficher la liste */}
+      <GenericList
+        data={limitedChantiers}
+        renderItemContent={renderChantier}
+      />
 
       {/* Bouton pour charger plus d'éléments */}
       <TouchableOpacity style={styles.loadMoreButton} onPress={loadMoreItems}>
@@ -64,7 +72,7 @@ const styles = StyleSheet.create({
     color: "#2c3e50",
   },
   addButton: {
-    backgroundColor: "#3498db",  // Bleu
+    backgroundColor: "#3498db", // Bleu
     paddingVertical: 15,
     borderRadius: 10,
     marginBottom: 20,
@@ -86,6 +94,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
+  },
+  chantierItem: {
+    marginBottom: 15,
   },
   chantierName: {
     fontSize: 18,

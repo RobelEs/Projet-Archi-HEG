@@ -4,13 +4,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import { NavigationContainer } from "@react-navigation/native";
-import ChantiersScreen from "../screens/ChantiersScreen";
+import ChantiersScreen from "../screens/Chantier/ChantiersScreen";
 import EmployeScreen from "../screens/EmployeScreen";
-import ClientsScreen from "../screens/ClientsScreen";
-import NoterChantierScreen from "../screens/NoterChantierScreen";
-import Login from "../screens/Login";
-import AjouterChantierScreen from "../screens/AjouterChantierScreen";
-import DonneesPersonnellesScreen from "../screens/DonneesPersonnellesScreen"; // Importer la nouvelle page
+import ClientsScreen from "../screens/Client/ClientsScreen";
+import NoterChantierScreen from "../screens/Client/NoterChantierScreen";
+import Login from "../screens/Login/Login";
+import AjouterChantierScreen from "../screens/Chantier/AjouterChantierScreen";
+import DonneesPersonnellesScreen from "../screens/Employe/DonneesPersonnellesScreen"; // Importer la nouvelle page
 
 const Stack = createNativeStackNavigator();
 
