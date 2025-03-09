@@ -8,9 +8,17 @@ const NoterChantierScreen = ({ route, navigation }) => {
   const [commentaire, setCommentaire] = useState("");
 
   const handleSubmit = () => {
+    const noteValue = parseInt(note, 10); // Convertir la note en entier
+
+    if (noteValue < 1 || noteValue > 5 || isNaN(noteValue)) {
+      alert("La note doit être comprise entre 1 et 5.");
+      return;
+    }
+
     // Logique pour enregistrer la note et le commentaire
-    console.log(`Note pour le chantier ${chantierId}: ${note}`);
+    console.log(`Note pour le chantier ${chantierId}: ${noteValue}`);
     console.log(`Commentaire: ${commentaire}`);
+
     // Rediriger vers la page précédente ou vers une confirmation
     navigation.goBack();
   };
@@ -24,6 +32,7 @@ const NoterChantierScreen = ({ route, navigation }) => {
         value={note}
         onChangeText={setNote}
         keyboardType="numeric"
+        maxLength={1} // Limite la saisie à 1 caractère (pour les notes entre 1 et 5)
       />
       <Text style={styles.label}>Commentaire:</Text>
       <TextInput

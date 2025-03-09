@@ -1,7 +1,6 @@
 // screens/ChantiersScreen.js
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import GenericList from "../../composants/GenericList"; // Assure-toi que GenericList est bien importé
+import { View, Text, TouchableOpacity, StyleSheet, FlatList } from "react-native";
 
 const ChantiersScreen = ({ navigation }) => {
   const chantiers = [
@@ -26,12 +25,14 @@ const ChantiersScreen = ({ navigation }) => {
   // Limite les chantiers affichés à ceux qui sont visibles
   const limitedChantiers = chantiers.slice(0, visibleItems);
 
-  // Fonction pour afficher chaque chantier
-  const renderChantier = (item) => (
-    <View style={styles.chantierItem}>
+  const renderChantier = ({ item }) => (
+    <TouchableOpacity
+      style={styles.chantierItem}
+      onPress={() => navigation.navigate("ChantierDetail", { chantierId: item.id })}
+    >
       <Text style={styles.chantierName}>{item.nom}</Text>
       <Text style={styles.chantierStatus}>{item.statut}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -45,15 +46,24 @@ const ChantiersScreen = ({ navigation }) => {
         <Text style={styles.addButtonText}>Ajouter un Chantier</Text>
       </TouchableOpacity>
 
-      {/* Utilisation de GenericList pour afficher la liste */}
-      <GenericList
+      {/* Utilisation de FlatList pour afficher la liste */}
+      <FlatList
         data={limitedChantiers}
-        renderItemContent={renderChantier}
+        keyExtractor={(item) => item.id}
+        renderItem={renderChantier}
+        contentContainerStyle={{ paddingBottom: 80 }} // Ajouter un peu d'espace au bas de la liste pour le bouton "Voir plus"
       />
 
-      {/* Bouton pour charger plus d'éléments */}
       <TouchableOpacity style={styles.loadMoreButton} onPress={loadMoreItems}>
         <Text style={styles.loadMoreText}>Voir plus</Text>
+      </TouchableOpacity>
+
+      {/* Nouveau bouton pour naviguer vers la page d'ajout d'un employé */}
+      <TouchableOpacity
+        style={styles.addClientButton}
+        onPress={() => navigation.navigate("AjouterEmploye")}
+      >
+        <Text style={styles.addClientButtonText}>Ajouter un Employé</Text>
       </TouchableOpacity>
     </View>
   );
@@ -97,6 +107,14 @@ const styles = StyleSheet.create({
   },
   chantierItem: {
     marginBottom: 15,
+    padding: 15,
+    backgroundColor: "#ffffff",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 6,
+    elevation: 5, // Pour Android
   },
   chantierName: {
     fontSize: 18,
@@ -106,6 +124,18 @@ const styles = StyleSheet.create({
   chantierStatus: {
     fontSize: 14,
     color: "#95a5a6",
+  },
+  addClientButton: {
+    backgroundColor: "#2ecc71", // Vert
+    paddingVertical: 15,
+    borderRadius: 10,
+    marginTop: 20,
+    alignItems: "center",
+  },
+  addClientButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
 

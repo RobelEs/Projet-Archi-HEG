@@ -1,4 +1,4 @@
-import React from "react";
+ import React from "react";
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from "react-native";
 
 const EmployeScreen = ({ navigation }) => {
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EmployeScreen;
+export default EmployeScreen; 
