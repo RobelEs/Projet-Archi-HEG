@@ -11,6 +11,7 @@ import NoterChantierScreen from "../screens/Client/NoterChantierScreen";
 import Login from "../screens/Login/Login";
 import AjouterChantierScreen from "../screens/Chantier/AjouterChantierScreen";
 import DonneesPersonnellesScreen from "../screens/Employe/DonneesPersonnellesScreen"; // Importer la nouvelle page
+import HorairesScreen from "../screens/Employe/HorairesScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -59,12 +60,18 @@ const StackNavigation = () => {
           options={{ title: 'Noter le Chantier' }}
         />
         
-        {/* Nouvelle page pour les données personnelles */}
         <Stack.Screen
           name="DonnéesPersonnelles"
           component={DonneesPersonnellesScreen}
           options={{ title: 'Données Personnelles' }}
         />
+
+        <Stack.Screen
+          name="Horaires"
+          component={HorairesScreen}
+          options={{ title: 'Horaires de Travail' }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

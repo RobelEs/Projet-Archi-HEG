@@ -1,8 +1,10 @@
-// DonnéesPersonnellesScreen.js
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const DonneesPersonnellesScreen = () => {
+  const navigation = useNavigation(); // Pour la navigation
+
   const [phone, setPhone] = useState("0123456789");
   const [email, setEmail] = useState("exemple@email.com");
   const [address, setAddress] = useState("123 Rue Exemple, Ville");
@@ -19,6 +21,7 @@ const DonneesPersonnellesScreen = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Mes informations personnelles</Text>
 
+      {/* Informations non modifiables */}
       <View style={styles.infoContainer}>
         <Text style={styles.infoLabel}>Nom</Text>
         <Text style={styles.infoText}>{lastName}</Text>
@@ -34,7 +37,7 @@ const DonneesPersonnellesScreen = () => {
         <Text style={styles.infoText}>{birthDate}</Text>
       </View>
 
-      {/* Modifiables */}
+      {/* Champs modifiables */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Numéro de téléphone</Text>
         <TextInput
@@ -64,8 +67,17 @@ const DonneesPersonnellesScreen = () => {
         />
       </View>
 
+      {/* Bouton de sauvegarde */}
       <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
         <Text style={styles.saveButtonText}>Sauvegarder</Text>
+      </TouchableOpacity>
+
+      {/* Bouton Voir mes horaires */}
+      <TouchableOpacity
+        style={styles.horairesButton}
+        onPress={() => navigation.navigate("Horaires")}
+      >
+        <Text style={styles.horairesButtonText}>Voir mes horaires</Text>
       </TouchableOpacity>
     </View>
   );
@@ -82,9 +94,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     color: "#333",
+    textAlign: "center",
   },
   infoContainer: {
     marginBottom: 15,
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   infoLabel: {
     fontSize: 18,
@@ -92,7 +112,8 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 16,
-    color: "#777",
+    fontWeight: "bold",
+    color: "#333",
     marginTop: 5,
   },
   inputContainer: {
@@ -106,19 +127,32 @@ const styles = StyleSheet.create({
     height: 45,
     borderColor: "#ccc",
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 8,
     paddingLeft: 10,
     fontSize: 16,
     marginTop: 5,
+    backgroundColor: "#fff",
   },
   saveButton: {
     backgroundColor: "#27AE60",
     paddingVertical: 12,
     borderRadius: 10,
-    marginTop: 30,
+    marginTop: 20,
     alignItems: "center",
   },
   saveButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  horairesButton: {
+    backgroundColor: "#3498db",
+    paddingVertical: 12,
+    borderRadius: 10,
+    marginTop: 15,
+    alignItems: "center",
+  },
+  horairesButtonText: {
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
