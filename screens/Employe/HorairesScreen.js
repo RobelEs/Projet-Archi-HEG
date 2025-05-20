@@ -24,9 +24,9 @@ const horairesMensuels = {
 };
 
 const HorairesMensuelsScreen = () => {
-  const [selectedDate, setSelectedDate] = useState("2025-03-10"); // Date initiale (par exemple, lundi 10 mars)
+  const [selectedDate, setSelectedDate] = useState("2025-03-10"); 
   const [schedule, setSchedule] = useState([]);
-  const [noData, setNoData] = useState(false); // Pour afficher "Aucune donnée" si la semaine n'a pas d'horaires
+  const [noData, setNoData] = useState(false); 
 
   // Fonction pour calculer les jours de la semaine à partir du lundi
   const getWeekDays = (date) => {

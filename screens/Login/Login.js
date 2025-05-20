@@ -1,15 +1,24 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { loginUser } from "../../api";
+
 
 const Login = ({ navigation }) => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");     
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    if (username === "" && password === "") {
-      navigation.replace("Home");
-    } else {
-      alert("Nom d'utilisateur ou mot de passe incorrect");
+  const handleLogin = async () => {
+    if (email === "" || password === "") {
+      Alert.alert("Erreur", "Veuillez remplir tous les champs.");
+      return;
+    }
+
+    try {
+      const response = await loginUser(email, password);
+      console.log("Connexion réussie, token :", response.token);
+      navigation.replace("Home"); // Naviguer après succès
+    } catch (error) {
+      Alert.alert("Erreur", error.message);
     }
   };
 
@@ -19,10 +28,10 @@ const Login = ({ navigation }) => {
 
       <TextInput
         style={styles.input}
-        placeholder="Nom d'utilisateur"
+        placeholder="Adresse e-mail"
         placeholderTextColor="#aaa"
-        value={username}
-        onChangeText={setUsername}
+        value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
@@ -38,7 +47,7 @@ const Login = ({ navigation }) => {
           <Text style={styles.buttonText}>Se connecter</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.button, styles.forgotButton]} onPress={() => alert("Mot de passe oublié")}>
+        <TouchableOpacity style={[styles.button, styles.forgotButton]} onPress={() => Alert.alert("Mot de passe oublié")}>
           <Text style={styles.buttonText}>Mot de passe oublié</Text>
         </TouchableOpacity>
       </View>
@@ -51,7 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#1e1e2d", // Fond sombre élégant
+    backgroundColor: "#1e1e2d",
     padding: 20,
   },
   title: {
@@ -88,13 +97,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   loginButton: {
-    backgroundColor: "#4CAF50", // Vert
-  },
-  registerButton: {
-    backgroundColor: "#2196F3", // Bleu
+    backgroundColor: "#4CAF50",
   },
   forgotButton: {
-    backgroundColor: "#FF9800", // Orange
+    backgroundColor: "#FF9800",
   },
   buttonText: {
     color: "#fff",
