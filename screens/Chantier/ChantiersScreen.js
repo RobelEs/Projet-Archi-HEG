@@ -1,37 +1,42 @@
-// screens/ChantiersScreen.js
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, ActivityIndicator } from "react-native";
+import { fetchChantiers } from "../../api";
+
 
 const ChantiersScreen = ({ navigation }) => {
-  const chantiers = [
-    { id: "1", nom: "Chantier A", statut: "En cours" },
-    { id: "2", nom: "Chantier B", statut: "Terminé" },
-    { id: "3", nom: "Chantier C", statut: "En cours" },
-    { id: "4", nom: "Chantier D", statut: "Terminé" },
-    { id: "5", nom: "Chantier E", statut: "En cours" },
-    { id: "6", nom: "Chantier F", statut: "Terminé" },
-  ];
-
-  const [visibleItems, setVisibleItems] = useState(3); // Nombre d'éléments à afficher initialement
+ const [chantiers, setChantiers] = useState([]);
+  const [visibleItems, setVisibleItems] = useState(3);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setVisibleItems(3); // Réinitialiser à chaque fois qu'on revient à la page
+    const loadChantiers = async () => {
+      try {
+        const data = await fetchChantiers();
+        setChantiers(data); // data doit être un tableau
+      } catch (error) {
+        console.error("Erreur lors du chargement des chantiers :", error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadChantiers();
   }, []);
 
-  const loadMoreItems = () => {
-    setVisibleItems(visibleItems + 3); // Ajouter 3 éléments à chaque fois qu'on clique sur "Voir plus"
-  };
-
-  // Limite les chantiers affichés à ceux qui sont visibles
+  // Affiche seulement les chantiers visibles
   const limitedChantiers = chantiers.slice(0, visibleItems);
+
+  const loadMoreItems = () => {
+    setVisibleItems((prev) => prev + 3);
+  };
 
   const renderChantier = ({ item }) => (
     <TouchableOpacity
       style={styles.chantierItem}
       onPress={() => navigation.navigate("ChantierDetail", { chantierId: item.id })}
     >
-      <Text style={styles.chantierName}>{item.nom}</Text>
-      <Text style={styles.chantierStatus}>{item.statut}</Text>
+      <Text style={styles.chantierName}>{item.name}</Text>
+      <Text style={styles.chantierStatus}>Client: {item.client_id}</Text>
     </TouchableOpacity>
   );
 
@@ -46,19 +51,23 @@ const ChantiersScreen = ({ navigation }) => {
         <Text style={styles.addButtonText}>Ajouter un Chantier</Text>
       </TouchableOpacity>
 
-      {/* Utilisation de FlatList pour afficher la liste */}
-      <FlatList
-        data={limitedChantiers}
-        keyExtractor={(item) => item.id}
-        renderItem={renderChantier}
-        contentContainerStyle={{ paddingBottom: 80 }} // Ajouter un peu d'espace au bas de la liste pour le bouton "Voir plus"
-      />
+      {loading ? (
+        <ActivityIndicator size="large" color="#3498db" />
+      ) : (
+        <FlatList
+          data={limitedChantiers}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderChantier}
+          contentContainerStyle={{ paddingBottom: 80 }}
+        />
+      )}
 
-      <TouchableOpacity style={styles.loadMoreButton} onPress={loadMoreItems}>
-        <Text style={styles.loadMoreText}>Voir plus</Text>
-      </TouchableOpacity>
+      {!loading && (
+        <TouchableOpacity style={styles.loadMoreButton} onPress={loadMoreItems}>
+          <Text style={styles.loadMoreText}>Voir plus</Text>
+        </TouchableOpacity>
+      )}
 
-      {/* Nouveau bouton pour naviguer vers la page d'ajout d'un employé */}
       <TouchableOpacity
         style={styles.addClientButton}
         onPress={() => navigation.navigate("AjouterEmploye")}
@@ -68,6 +77,7 @@ const ChantiersScreen = ({ navigation }) => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
