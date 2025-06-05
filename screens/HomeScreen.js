@@ -1,6 +1,7 @@
 // HomeScreen.js
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeScreen = ({ navigation }) => {
   const [role, setRole] = useState(null);
@@ -24,11 +25,14 @@ const HomeScreen = ({ navigation }) => {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    // Supprime le token stocké pour sécuriser la déconnexion
+    await AsyncStorage.removeItem("token");
+
     // Réinitialise la navigation pour revenir à la page de connexion
     navigation.reset({
-      index: 0, // Réinitialise l'index pour être sur la première page (Login)
-      routes: [{ name: "Login" }], // Nom de la page de connexion
+      index: 0,
+      routes: [{ name: "Login" }],
     });
   };
 
