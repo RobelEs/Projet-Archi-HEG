@@ -15,7 +15,7 @@ const EmployeScreen = ({ navigation }) => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate("EmployeDetails", { id: item.id })}
+            onPress={() => navigation.navigate("EmployeDetails", { employe: item })}
             style={styles.item}
           >
             <Text style={styles.itemText}>{item.nom}</Text>
