@@ -10,6 +10,12 @@ const EmployeScreen = ({ navigation }) => {
     const load = async () => {
       try {
         const data = await fetchEmployes();
+        // Tri alphabétique des employés par nom
+        data.sort((a, b) => {
+          const nomA = a.nom || a.name || "";
+          const nomB = b.nom || b.name || "";
+          return nomA.localeCompare(nomB);
+        });
         setEmployes(data);
       } catch (e) {
         console.error("Erreur lors du chargement des employés:", e.message);

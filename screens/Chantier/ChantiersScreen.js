@@ -12,6 +12,8 @@ const ChantiersScreen = ({ navigation }) => {
     const loadChantiers = async () => {
       try {
         const data = await fetchChantiers();
+        // Tri des chantiers par nom pour l'affichage
+        data.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
         setChantiers(data); // data doit être un tableau
       } catch (error) {
         console.error("Erreur lors du chargement des chantiers :", error.message);
