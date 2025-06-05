@@ -115,11 +115,21 @@ export const createEmploye = async (payload) => {
       },
       body: JSON.stringify(payload),
     });
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.error || "Erreur lors de la création de l'employé");
+
+    let data = null;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      // Réponse sans corps JSON (204 No Content, etc.)
+      data = null;
     }
-    return data.data || data;
+
+    if (!response.ok) {
+      const message = data?.error || "Erreur lors de la création de l'employé";
+      throw new Error(message);
+    }
+
+    return data?.data || data;
   } catch (error) {
     throw error;
   }
