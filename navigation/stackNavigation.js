@@ -14,6 +14,7 @@ import DonneesPersonnellesScreen from "../screens/Employe/DonneesPersonnellesScr
 import HorairesScreen from "../screens/Employe/HorairesScreen";
 import ChantierDetail from "../screens/Chantier/ChantierDetail";
 import AjouterEmployeScreen from "../screens/Chantier/AjouterEmployeScreen";
+import EmployeDetailsScreen from "../screens/Employe/EmployeDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -80,7 +81,13 @@ const StackNavigation = () => {
           options={{ title: 'Détails du Chantier' }}
         />
 
-        <Stack.Screen name="AjouterEmploye" 
+        <Stack.Screen
+          name="EmployeDetails"
+          component={EmployeDetailsScreen}
+          options={{ title: "Détails de l'employé" }}
+        />
+
+        <Stack.Screen name="AjouterEmploye"
         component={AjouterEmployeScreen} />
         
       </Stack.Navigator>

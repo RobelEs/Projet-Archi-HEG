@@ -12,6 +12,8 @@ const ChantiersScreen = ({ navigation }) => {
     const loadChantiers = async () => {
       try {
         const data = await fetchChantiers();
+        // Tri des chantiers par nom pour l'affichage
+        data.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
         setChantiers(data); // data doit être un tableau
       } catch (error) {
         console.error("Erreur lors du chargement des chantiers :", error.message);
@@ -73,6 +75,13 @@ const ChantiersScreen = ({ navigation }) => {
         onPress={() => navigation.navigate("AjouterEmploye")}
       >
         <Text style={styles.addClientButtonText}>Ajouter un Employé</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.employeesButton}
+        onPress={() => navigation.navigate("Employes")}
+      >
+        <Text style={styles.employeesButtonText}>Voir les Employés</Text>
       </TouchableOpacity>
     </View>
   );
@@ -143,6 +152,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   addClientButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  employeesButton: {
+    backgroundColor: "#e67e22", // Orange
+    paddingVertical: 15,
+    borderRadius: 10,
+    marginTop: 20,
+    alignItems: "center",
+  },
+  employeesButtonText: {
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",

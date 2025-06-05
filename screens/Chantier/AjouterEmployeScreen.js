@@ -1,17 +1,22 @@
 // screens/AjouterEmployeScreen.js
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { createEmploye } from "../../api";
 
-const AjouterEmployeScreen = () => {
-  const [nom, setNom] = useState("");
-  const [prenom, setPrenom] = useState("");
-  const [adresse, setAdresse] = useState("");
-  const [login, setLogin] = useState("");
-  const [mdp, setMdp] = useState("");
+const AjouterEmployeScreen = ({ navigation }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = () => {
-    // Traitement pour ajouter l'employé
-    console.log("Employé ajouté :", { nom, prenom, adresse, login, mdp });
+  const handleSubmit = async () => {
+    try {
+      await createEmploye({ name, email, password });
+      Alert.alert("Succès", "Employé ajouté", [
+        { text: "OK", onPress: () => navigation.goBack() },
+      ]);
+    } catch (e) {
+      Alert.alert("Erreur", e.message);
+    }
   };
 
   return (
@@ -21,32 +26,21 @@ const AjouterEmployeScreen = () => {
       <TextInput
         style={styles.input}
         placeholder="Nom"
-        value={nom}
-        onChangeText={setNom}
+        value={name}
+        onChangeText={setName}
       />
       <TextInput
         style={styles.input}
-        placeholder="Prénom"
-        value={prenom}
-        onChangeText={setPrenom}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Adresse"
-        value={adresse}
-        onChangeText={setAdresse}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Login"
-        value={login}
-        onChangeText={setLogin}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
       />
       <TextInput
         style={styles.input}
         placeholder="Mot de passe"
-        value={mdp}
-        onChangeText={setMdp}
+        value={password}
+        onChangeText={setPassword}
         secureTextEntry
       />
 
