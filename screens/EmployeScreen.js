@@ -1,29 +1,48 @@
-import React from "react";
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native";
+import { fetchEmployes } from "../api";
 
 const EmployeScreen = ({ navigation }) => {
-  const employes = [
-    { id: "1", nom: "Jean Dupont", role: "Chef de chantier", statut: "Actif" },
-    { id: "2", nom: "Marie Dupuis", role: "Ouvrier", statut: "En congé" },
-  ];
+  const [employes, setEmployes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await fetchEmployes();
+        setEmployes(data);
+      } catch (e) {
+        console.error("Erreur lors du chargement des employés:", e.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Liste des Employés</Text>
-      <FlatList
-        data={employes}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => navigation.navigate("EmployeDetails", { employe: item })}
-            style={styles.item}
-          >
-            <Text style={styles.itemText}>{item.nom}</Text>
-            <Text style={styles.itemText}>Rôle: {item.role}</Text>
-            <Text style={styles.itemText}>Statut: {item.statut}</Text>
-          </TouchableOpacity>
-        )}
-      />
+      {loading ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <FlatList
+          data={employes}
+          keyExtractor={(item) => item.id?.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("EmployeDetails", { id: item.id, employe: item })
+              }
+              style={styles.item}
+            >
+              <Text style={styles.itemText}>{item.nom || item.name}</Text>
+              {item.role && <Text style={styles.itemText}>Rôle: {item.role}</Text>}
+              {item.statut && <Text style={styles.itemText}>Statut: {item.statut}</Text>}
+            </TouchableOpacity>
+          )}
+        />
+      )}
     </View>
   );
 };

@@ -1,17 +1,29 @@
 // screens/AjouterEmployeScreen.js
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { createEmploye } from "../../api";
 
-const AjouterEmployeScreen = () => {
+const AjouterEmployeScreen = ({ navigation }) => {
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
   const [adresse, setAdresse] = useState("");
   const [login, setLogin] = useState("");
   const [mdp, setMdp] = useState("");
 
-  const handleSubmit = () => {
-    // Traitement pour ajouter l'employé
-    console.log("Employé ajouté :", { nom, prenom, adresse, login, mdp });
+  const handleSubmit = async () => {
+    try {
+      await createEmploye({
+        name: `${prenom} ${nom}`.trim(),
+        email: login,
+        password: mdp,
+        adresse,
+      });
+      Alert.alert("Succès", "Employé ajouté", [
+        { text: "OK", onPress: () => navigation.goBack() },
+      ]);
+    } catch (e) {
+      Alert.alert("Erreur", e.message);
+    }
   };
 
   return (
